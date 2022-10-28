@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:FrekvencniAnalyzaGui"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="23"/>
+      <RowDefinition Height="411*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1618*"/>
+      <ColumnDefinition Width="3"/>
+      <ColumnDefinition Width="1000*"/>
+    </Grid.ColumnDefinitions>
+    <TextBox Grid.Row="1" Grid.Column="0" x:Name="InputTextBox" 
+             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+             TextChanged="InputTextBox_TextChanged" />
+    <GridSplitter Grid.Column="1" Grid.Row="1" ResizeDirection="Columns"/>
+    <TextBox Grid.Row="1" Grid.Column="2" x:Name="OutputTextBox" IsReadOnly="True" />
+  </Grid>
 </Window>
