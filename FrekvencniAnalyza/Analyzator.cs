@@ -6,6 +6,13 @@ namespace FrekvencniAnalyza;
 
 public static class Analyzator
 {
+
+  /// <summary>
+  /// Znaky, ktere bezne ignorovat. Tohle by elegantneji vyresil regex, ale co uz.
+  /// </summary>
+  public const string Interpunkce = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_…’`‚‘—";
+  // ,.?!'"„“«»/*-+<>-–:;@#$%^&*()[]{}§/|\_…’`‚‘—
+
   public static List<FrekvencePismena> ZjistitFrekvence(
     string s, bool ignoreDiacritics, string charsToIgnore)
   {

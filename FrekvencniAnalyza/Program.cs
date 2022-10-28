@@ -2,12 +2,11 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
+var s = await Console.In.ReadToEndAsync();
 
+var frekvence = Analyzator.ZjistitFrekvence(s, true, Analyzator.Interpunkce);
 
-var frekvence = Analyzator.ZjistitFrekvence(
-  "aaa bbb cccCCCččččss", true, string.Empty);
-
-foreach(var record in frekvence)
+foreach (var record in frekvence)
 {
   Console.WriteLine(record);
 }

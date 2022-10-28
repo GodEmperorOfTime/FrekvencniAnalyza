@@ -20,11 +20,14 @@ namespace FrekvencniAnalyzaGui;
 /// </summary>
 public partial class MainWindow : Window
 {
+  
+
+
   public MainWindow()
   {
     InitializeComponent();
-    this.CharsToIgnoreTextBox.Text = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_…’`‚‘—";
-    // ,.?!'"„“«»/*-+<>-–:;@#$%^&*()[]{}§/|\_…’`‚‘—
+    this.CharsToIgnoreTextBox.Text = Analyzator.Interpunkce;
+   
   }
 
   private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
