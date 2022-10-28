@@ -10,35 +10,28 @@ foreach(var record in frekvence)
   Console.WriteLine(record);
 }
 
-
-
-record FrekvencePismena(char Pismeno, double Frekvence)
+public record FrekvencePismena(char Pismeno, double Frekvence)
 {
   public override string ToString()
     => $"{Pismeno}: {Frekvence * 100.0:N1} %";
 }
 
-static class Analyzator
+public static class Analyzator
 {
   public static List<FrekvencePismena> ZjistitFrekvence(string s, IEqualityComparer<char> charComparer)
   {
     s = s.VyfiltrovatWhiteSpace();
-    var groupy = s
-      .ToArray()
-      .GroupBy(c => c, charComparer)
-      .Select(g => (Pismeno: g.Key.ToUpper(), Pocet: g.Count()))
-      ;
-    var list = new List<FrekvencePismena>();
-    foreach (var group in groupy)
+    var charTotalAsDouble = (double)s.Length;
+    FrekvencePismena vytvritFrekvenci(char key, IEnumerable<char> chary)
     {
-      var frekvence = group.Pocet / (double)s.Length;
-      FrekvencePismena item = new(group.Pismeno, frekvence);
-      list.Add(item);
+      var frekvence = chary.Count() / charTotalAsDouble;
+      return new (key.ToUpper(), frekvence);
     }
-    return list;
+    return s
+      .GroupBy(c => c, vytvritFrekvenci, charComparer)
+      .OrderByDescending(r => r.Frekvence)
+      .ToList();
   }
-
-
 
 }
 
