@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FrekvencniAnalyzaGui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="494" Width="800">
+        Title="Frekvenční analýza" Height="494" Width="800">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="23"/>
