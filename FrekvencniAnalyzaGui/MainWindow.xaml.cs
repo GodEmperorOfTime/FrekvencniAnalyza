@@ -25,11 +25,38 @@ public partial class MainWindow : Window
     InitializeComponent();
   }
 
-  private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+  private async void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
   {
-    string inputText = InputTextBox.Text;
-    var frekvence = Analyzator.ZjistitFrekvence(inputText, CharComparer.CurrentCultureIgnoreCase);
-    OutputTextBox.Text = FormatOutput(frekvence);
+    await ProcessDataAsync();
+  }
+
+  private async void CharComparerCheckedChanged(object sender, RoutedEventArgs e)
+  {
+    await ProcessDataAsync();
+  }
+
+  private async Task ProcessDataAsync()
+  {
+    string inputText = InputTextBox?.Text ?? string.Empty;
+    var comparer = GetCharComparer();
+    string vystup = await Task.Run(() => GetTextOutput(inputText, comparer));
+    OutputTextBox.Text = vystup;
+  }
+
+  private string GetTextOutput(string inputText, IEqualityComparer<char> comparer)
+  {
+    var frekvence = Analyzator.ZjistitFrekvence(inputText, comparer);
+    return FormatOutput(frekvence);    
+  }
+
+  private IEqualityComparer<char> GetCharComparer()
+  {
+    if (this.IgnoreCaseIgnoreDiacriticRadioButton?.IsChecked == true)
+      return CharComparer.CurrentCultureIgnoreCaseIgnoreDiacritic;
+    else if (this.IgnoreCaseRadioButton?.IsChecked == true)
+      return CharComparer.CurrentCultureIgnoreCase;
+    else
+      return CharComparer.CurrentCultureIgnoreCase;
   }
 
   private string FormatOutput(List<FrekvencePismena> frekvence)

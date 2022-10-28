@@ -16,6 +16,14 @@
       <ColumnDefinition Width="3"/>
       <ColumnDefinition Width="1000*"/>
     </Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal">
+      <RadioButton GroupName="CharComparer" IsChecked="True" VerticalAlignment="Center"
+                   Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
+                   x:Name="IgnoreCaseIgnoreDiacriticRadioButton">Nerozlišovat diakritiku</RadioButton>
+      <RadioButton GroupName="CharComparer" VerticalAlignment="Center" 
+                   Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
+                   x:Name="IgnoreCaseRadioButton">Rozlišovat diakritiku</RadioButton>
+    </StackPanel>
     <TextBox Grid.Row="1" Grid.Column="0" x:Name="InputTextBox" 
              TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
              TextChanged="InputTextBox_TextChanged" />
