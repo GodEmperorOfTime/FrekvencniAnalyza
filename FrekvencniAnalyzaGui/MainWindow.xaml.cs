@@ -23,8 +23,8 @@ public partial class MainWindow : Window
   public MainWindow()
   {
     InitializeComponent();
-    this.CharsToIgnoreTextBox.Text = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_";
-    // ,.?!'"„“/*-+<>-–:;@#$%^&*()[]{}§/|\_
+    this.CharsToIgnoreTextBox.Text = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_…’`‚‘—";
+    // ,.?!'"„“/*-+<>-–:;@#$%^&*()[]{}§/|\_…’`‚‘—
   }
 
   private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -32,7 +32,7 @@ public partial class MainWindow : Window
     await ProcessDataAsync();
   }
 
-  private async void CharComparerCheckedChanged(object sender, RoutedEventArgs e)
+  private async void IgnoreDiacriticsCheckedChanged(object sender, RoutedEventArgs e)
   {
     await ProcessDataAsync();
   }
@@ -41,26 +41,17 @@ public partial class MainWindow : Window
   {
     string inputText = InputTextBox?.Text ?? string.Empty;
     var charsToIgnore = CharsToIgnoreTextBox?.Text ?? string.Empty;
-    var comparer = GetCharComparer();
-    string vystup = await Task.Run(() => GetTextOutput(inputText, comparer, charsToIgnore));
+    var ignoreDiacritics = IgnoreDiacriticsCheckBox.IsChecked == true;
+    string vystup = await Task.Run(() => GetTextOutput(inputText, ignoreDiacritics, charsToIgnore));
     OutputTextBox.Text = vystup;
   }
 
-  private string GetTextOutput(string inputText, IEqualityComparer<char> comparer, string charsToIgnore)
+  private string GetTextOutput(string inputText, bool ignoreDiacritics, string charsToIgnore)
   {
-    var frekvence = Analyzator.ZjistitFrekvence(inputText, comparer, charsToIgnore);
+    var frekvence = Analyzator.ZjistitFrekvence(inputText, ignoreDiacritics, charsToIgnore);
     return FormatOutput(frekvence);    
   }
 
-  private IEqualityComparer<char> GetCharComparer()
-  {
-    if (this.IgnoreCaseIgnoreDiacriticRadioButton?.IsChecked == true)
-      return CharComparer.CurrentCultureIgnoreCaseIgnoreDiacritic;
-    else if (this.IgnoreCaseRadioButton?.IsChecked == true)
-      return CharComparer.CurrentCultureIgnoreCase;
-    else
-      return CharComparer.CurrentCultureIgnoreCase;
-  }
 
   private string FormatOutput(List<FrekvencePismena> frekvence)
   {
@@ -71,4 +62,5 @@ public partial class MainWindow : Window
     }
     return b.ToString();
   }
+
 }

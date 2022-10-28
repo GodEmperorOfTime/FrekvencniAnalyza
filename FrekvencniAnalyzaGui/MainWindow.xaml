@@ -17,14 +17,13 @@
       <ColumnDefinition Width="1000*"/>
     </Grid.ColumnDefinitions>
     <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
-      <RadioButton GroupName="CharComparer" IsChecked="True" VerticalAlignment="Center"
-                   Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
-                   x:Name="IgnoreCaseIgnoreDiacriticRadioButton">Nerozlišovat diakritiku</RadioButton>
-      <RadioButton GroupName="CharComparer" VerticalAlignment="Center" 
-                   Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
-                   x:Name="IgnoreCaseRadioButton">Rozlišovat diakritiku</RadioButton>      
-      <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Black">Nezapočítavat znaky:</TextBlock>
-      <TextBox x:Name="CharsToIgnoreTextBox" TextChanged="TextBox_TextChanged" Width="200"  />
+      <CheckBox x:Name="IgnoreDiacriticsCheckBox" IsChecked="True" VerticalAlignment="Center"
+                Checked="IgnoreDiacriticsCheckedChanged" Unchecked="IgnoreDiacriticsCheckedChanged">
+        Nerozlišovat diakritiku
+      </CheckBox>
+      <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+      <TextBlock VerticalAlignment="Center" >Nezapočítavat znaky:</TextBlock>
+      <TextBox x:Name="CharsToIgnoreTextBox" TextChanged="TextBox_TextChanged" Width="400"  />
     </StackPanel>
     <TextBox Grid.Row="1" Grid.Column="0" x:Name="InputTextBox" 
              TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"

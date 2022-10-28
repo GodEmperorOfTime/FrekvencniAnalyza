@@ -7,9 +7,11 @@ namespace FrekvencniAnalyza;
 public static class Analyzator
 {
   public static List<FrekvencePismena> ZjistitFrekvence(
-    string s, IEqualityComparer<char> charComparer, string charsToIgnore)
+    string s, bool ignoreDiacritics, string charsToIgnore)
   {
     s = s.VyfiltrovatWhiteSpace().VyfiltrovatChary(charsToIgnore);
+    if (ignoreDiacritics)
+      s = s.RemoveDiacritics();
     var charTotalAsDouble = (double)s.Length;
     FrekvencePismena vytvritFrekvenci(char key, IEnumerable<char> chary)
     {
@@ -17,7 +19,7 @@ public static class Analyzator
       return new(key.ToUpper(), frekvence);
     }
     return s
-      .GroupBy(c => c, vytvritFrekvenci, charComparer)
+      .GroupBy(c => c, vytvritFrekvenci, CharComparer.CurrentCultureIgnoreCase)
       .OrderByDescending(r => r.Frekvence)
       .ToList();
   }
@@ -65,6 +67,8 @@ static class StringExtensions
   public static string CharToString(this char c) => new(new char[] { c });
 
   public static char ToUpper(this char c) => c.ToString().ToUpper()[0];
+
+  public static string RemoveDiacritics(this string s) => new(s.Select(RemoveDiacritics).ToArray());
 
   public static char RemoveDiacritics(this char c) => substituce.TryGetValue(c, out var r) ? r : c;
 
