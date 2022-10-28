@@ -24,7 +24,7 @@ public partial class MainWindow : Window
   {
     InitializeComponent();
     this.CharsToIgnoreTextBox.Text = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_…’`‚‘—";
-    // ,.?!'"„“/*-+<>-–:;@#$%^&*()[]{}§/|\_…’`‚‘—
+    // ,.?!'"„“«»/*-+<>-–:;@#$%^&*()[]{}§/|\_…’`‚‘—
   }
 
   private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -99,6 +99,9 @@ static class StringExtensions
         { 'ď', 'd' },
         { 'ö', 'o' },
         { 'ł', 'l' },
+        { 'à', 'a' },
+        { 'ä', 'a' },
+        { 'è', 'e' },
       };
     r.ToList().ForEach(p => r.Add(p.Key.ToUpper(), p.Value.ToUpper()));
     return r;    
