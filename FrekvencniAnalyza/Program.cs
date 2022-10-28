@@ -1,50 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-//var clen = int.Parse(args[0]);
-//var suma = Fibbonaci.Suma(clen);
-//Console.WriteLine(suma);
 
-var frekvence = Analyzator.ZjistitFrekvence("aaa bbb cccCCC");
 
-//// frekvence.ForEach(Console.WriteLine);
+var frekvence = Analyzator.ZjistitFrekvence("aaa bbb cccCCCččččss", CharComparere.CurrentCultureIgnoreCaseIgnoreDiacritic);
 
 foreach(var record in frekvence)
 {
   Console.WriteLine(record);
 }
 
-
-//static class Fibbonaci
-//{
-//  public static double Suma(int clen)
-//  {
-//    if (clen <= 0)
-//      throw new ArgumentOutOfRangeException("n");
-//    else if (clen == 1)
-//      return 1.0;
-//    else if (clen == 2)
-//      return 0.0;
-//    else
-//    {
-//      var a = 1;
-//      var b = 1;
-//      double sum = 0.0;
-//      bool jePlus = true;
-//      for (int n = 3; n <= clen; n++)
-//      {
-//        var c = a + b;
-//        a = b;
-//        b = c;
-//        var prevracena = 1.0 / c;
-//        sum += jePlus ? prevracena : -prevracena;
-//        jePlus = !jePlus;
-//      }
-//      return sum;
-//    }
-      
-//  }
-//}
 
 
 record FrekvencePismena(char Pismeno, double Frekvence)
@@ -55,13 +20,13 @@ record FrekvencePismena(char Pismeno, double Frekvence)
 
 static class Analyzator
 {
-  public static List<FrekvencePismena> ZjistitFrekvence(string s)
+  public static List<FrekvencePismena> ZjistitFrekvence(string s, IEqualityComparer<char> charComparer)
   {
     s = s.VyfiltrovatWhiteSpace();
     var groupy = s
       .ToArray()
-      .GroupBy(CharToString, StringComparer.CurrentCultureIgnoreCase)
-      .Select(g => (Pismeno: g.Key.ToUpper()[0], Pocet: g.Count()))
+      .GroupBy(c => c, charComparer)
+      .Select(g => (Pismeno: g.Key.ToUpper(), Pocet: g.Count()))
       ;
     var list = new List<FrekvencePismena>();
     foreach (var group in groupy)
@@ -73,12 +38,14 @@ static class Analyzator
     return list;
   }
 
-  private static string CharToString(this char c)
-  {
-    return new string(new char[] { c });
-  }
 
-  static string VyfiltrovatWhiteSpace(this string s)
+
+}
+
+static class StringExtensions
+{
+
+  public static string VyfiltrovatWhiteSpace(this string s)
   {
     var b = new StringBuilder();
     foreach (var c in s)
@@ -92,33 +59,8 @@ static class Analyzator
     return b.ToString();
   }
 
+  public static string CharToString(this char c) => new (new char[] { c });
+
+  public static char ToUpper(this char c) => c.ToString().ToUpper()[0];
+
 }
-
-class DiakritikaComparet : IEqualityComparer<string>
-{
-
-  static readonly Dictionary<char, char> substituce = new Dictionary<char, char>() { };
-  
-  static string BezDiakritiky(string s)
-  {
-    var b = new StringBuilder();
-    foreach (var c in s)
-    {
-      var subChar = substituce.TryGetValue(c, out var r)
-        ? r : c;
-      b.Append(subChar);      
-    }
-    return b.ToString();
-  }
-  
-  public bool Equals(string? x, string? y)
-  {
-    throw new NotImplementedException();
-  }
-
-  public int GetHashCode([DisallowNull] string obj)
-  {
-    throw new NotImplementedException();
-  }
-}
-
