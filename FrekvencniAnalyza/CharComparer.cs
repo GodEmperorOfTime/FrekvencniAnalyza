@@ -15,31 +15,13 @@ public static class CharComparer
   {
     private static readonly IEqualityComparer<char> _icCharComparer
       = StringComparer.CurrentCultureIgnoreCase.ToCharComparer();
-
-    static readonly IReadOnlyDictionary<char, char> substituce
-      = new Dictionary<char, char>(_icCharComparer) {
-        // Tohle bude fungovat jen pro cestinu
-        { 'ě', 'e' },
-        { 'š', 's' },
-        { 'č', 'c' },
-        { 'ř', 'r' },
-        { 'ž', 'z' },
-        { 'ý', 'y' },
-        { 'á', 'a' },
-        { 'í', 'i' },
-        { 'é', 'é' },
-        { 'ú', 'u' },
-        { 'ů', 'u' },
-        { 'ó', 'o' },
-      };
-
-    static char BezDiakritiky(char c) => substituce.TryGetValue(c, out var r) ? r : c;
+    
 
     public bool Equals(char x, char y)
-      => _icCharComparer.Equals(BezDiakritiky(x), BezDiakritiky(y));
+      => _icCharComparer.Equals(x.RemoveDiacritics(), y.RemoveDiacritics());
 
     public int GetHashCode([DisallowNull] char obj)
-      => _icCharComparer.GetHashCode(BezDiakritiky(obj));
+      => _icCharComparer.GetHashCode(obj.RemoveDiacritics());
   }
 
   static IEqualityComparer<char> ToCharComparer(this IEqualityComparer<string> equalityComparer)

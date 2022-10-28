@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FrekvencniAnalyzaGui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="494" Width="800">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="23"/>
@@ -16,18 +16,20 @@
       <ColumnDefinition Width="3"/>
       <ColumnDefinition Width="1000*"/>
     </Grid.ColumnDefinitions>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
       <RadioButton GroupName="CharComparer" IsChecked="True" VerticalAlignment="Center"
                    Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
                    x:Name="IgnoreCaseIgnoreDiacriticRadioButton">Nerozlišovat diakritiku</RadioButton>
       <RadioButton GroupName="CharComparer" VerticalAlignment="Center" 
                    Checked="CharComparerCheckedChanged" Unchecked="CharComparerCheckedChanged"
-                   x:Name="IgnoreCaseRadioButton">Rozlišovat diakritiku</RadioButton>
+                   x:Name="IgnoreCaseRadioButton">Rozlišovat diakritiku</RadioButton>      
+      <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Black">Nezapočítavat znaky:</TextBlock>
+      <TextBox x:Name="CharsToIgnoreTextBox" TextChanged="TextBox_TextChanged" Width="200"  />
     </StackPanel>
     <TextBox Grid.Row="1" Grid.Column="0" x:Name="InputTextBox" 
              TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-             TextChanged="InputTextBox_TextChanged" />
-    <GridSplitter Grid.Column="1" Grid.Row="1" ResizeDirection="Columns"/>
-    <TextBox Grid.Row="1" Grid.Column="2" x:Name="OutputTextBox" IsReadOnly="True" />
+             TextChanged="TextBox_TextChanged" />
+    <GridSplitter Grid.Column="1" Grid.Row="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    <TextBox Grid.Row="1" Grid.Column="2" x:Name="OutputTextBox" />
   </Grid>
 </Window>

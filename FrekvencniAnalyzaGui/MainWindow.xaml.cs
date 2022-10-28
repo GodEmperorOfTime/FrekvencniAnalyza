@@ -23,9 +23,11 @@ public partial class MainWindow : Window
   public MainWindow()
   {
     InitializeComponent();
+    this.CharsToIgnoreTextBox.Text = ",.?!'\"„“/*-+<>-–:;@#$%^&*()[]{}§/|\\_";
+    // ,.?!'"„“/*-+<>-–:;@#$%^&*()[]{}§/|\_
   }
 
-  private async void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+  private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
   {
     await ProcessDataAsync();
   }
@@ -38,14 +40,15 @@ public partial class MainWindow : Window
   private async Task ProcessDataAsync()
   {
     string inputText = InputTextBox?.Text ?? string.Empty;
+    var charsToIgnore = CharsToIgnoreTextBox?.Text ?? string.Empty;
     var comparer = GetCharComparer();
-    string vystup = await Task.Run(() => GetTextOutput(inputText, comparer));
+    string vystup = await Task.Run(() => GetTextOutput(inputText, comparer, charsToIgnore));
     OutputTextBox.Text = vystup;
   }
 
-  private string GetTextOutput(string inputText, IEqualityComparer<char> comparer)
+  private string GetTextOutput(string inputText, IEqualityComparer<char> comparer, string charsToIgnore)
   {
-    var frekvence = Analyzator.ZjistitFrekvence(inputText, comparer);
+    var frekvence = Analyzator.ZjistitFrekvence(inputText, comparer, charsToIgnore);
     return FormatOutput(frekvence);    
   }
 

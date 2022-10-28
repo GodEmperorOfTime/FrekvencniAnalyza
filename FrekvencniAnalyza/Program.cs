@@ -4,7 +4,8 @@ using System.Text;
 
 
 
-var frekvence = Analyzator.ZjistitFrekvence("aaa bbb cccCCCččččss", CharComparer.CurrentCultureIgnoreCaseIgnoreDiacritic);
+var frekvence = Analyzator.ZjistitFrekvence(
+  "aaa bbb cccCCCččččss", CharComparer.CurrentCultureIgnoreCaseIgnoreDiacritic, string.Empty);
 
 foreach(var record in frekvence)
 {
