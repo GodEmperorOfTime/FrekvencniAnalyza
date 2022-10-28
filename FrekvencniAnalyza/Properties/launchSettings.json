@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FrekvencniAnalyza": {
+      "commandName": "Project",
+      "commandLineArgs": "4"
+    }
+  }
+}
