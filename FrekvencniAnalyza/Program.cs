@@ -1,9 +1,10 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using FrekvencniAnalyza;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 
 
-var frekvence = Analyzator.ZjistitFrekvence("aaa bbb cccCCCččččss", CharComparere.CurrentCultureIgnoreCaseIgnoreDiacritic);
+var frekvence = Analyzator.ZjistitFrekvence("aaa bbb cccCCCččččss", CharComparer.CurrentCultureIgnoreCaseIgnoreDiacritic);
 
 foreach(var record in frekvence)
 {

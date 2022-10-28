@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-public static class CharComparere
+namespace FrekvencniAnalyza;
+
+public static class CharComparer
 {
 
-  public static IEqualityComparer<char> CurrentCultureIgnoreCase { get; } 
+  public static IEqualityComparer<char> CurrentCultureIgnoreCase { get; }
     = StringComparer.CurrentCultureIgnoreCase.ToCharComparer();
 
-  public static IEqualityComparer<char> CurrentCultureIgnoreCaseIgnoreDiacritic { get; } 
+  public static IEqualityComparer<char> CurrentCultureIgnoreCaseIgnoreDiacritic { get; }
     = new CurrentCultureIgnoreCaseIgnoreDiacriticComparere();
 
   class CurrentCultureIgnoreCaseIgnoreDiacriticComparere : IEqualityComparer<char>
@@ -16,18 +18,19 @@ public static class CharComparere
 
     static readonly IReadOnlyDictionary<char, char> substituce
       = new Dictionary<char, char>(_icCharComparer) {
-      { 'ě', 'e' },
-      { 'š', 's' },
-      { 'č', 'c' },
-      { 'ř', 'r' },
-      { 'ž', 'z' },
-      { 'ý', 'y' },
-      { 'á', 'a' },
-      { 'í', 'i' },
-      { 'é', 'é' },
-      { 'ú', 'u' },
-      { 'ů', 'u' },
-      { 'ó', 'o' },
+        // Tohle bude fungovat jen pro cestinu
+        { 'ě', 'e' },
+        { 'š', 's' },
+        { 'č', 'c' },
+        { 'ř', 'r' },
+        { 'ž', 'z' },
+        { 'ý', 'y' },
+        { 'á', 'a' },
+        { 'í', 'i' },
+        { 'é', 'é' },
+        { 'ú', 'u' },
+        { 'ů', 'u' },
+        { 'ó', 'o' },
       };
 
     static char BezDiakritiky(char c) => substituce.TryGetValue(c, out var r) ? r : c;
@@ -38,7 +41,7 @@ public static class CharComparere
     public int GetHashCode([DisallowNull] char obj)
       => _icCharComparer.GetHashCode(BezDiakritiky(obj));
   }
-  
+
   static IEqualityComparer<char> ToCharComparer(this IEqualityComparer<string> equalityComparer)
     => new CharEqualityComparereAdapter(equalityComparer);
 
@@ -60,8 +63,3 @@ public static class CharComparere
   }
 
 }
-
-
-
-
-
